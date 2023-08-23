@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import Register from '../src/components/Register';
+import Register from './components/Register';
 
 function App() {
   return (
