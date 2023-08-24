@@ -1,10 +1,14 @@
 // src/Register.js
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Login from './Login';
 
 const Register = () => {
+    const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     username: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -15,9 +19,33 @@ const Register = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic here
+    console.log(formData);
+    try {
+        const response = await dispatch(Register(formData))
+        console.log(response)
+
+        //show success message on toast
+        toast.success('Registration successful', {
+            position: toast.POSITION.TOP_CENTER
+        })
+
+        if (response.status === 201) {
+            history.push('/login')
+        }
+
+
+    } catch (error) {
+        console.log(error)
+
+        //show error message on toast
+        toast.error('Registration failed', {
+            position: toast.POSITION.TOP_CENTER
+        })
+
+    }
   };
 
   return (
